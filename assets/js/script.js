@@ -11,23 +11,31 @@ function formatDate(dateObject) {
     year: dateObject.getFullYear(),
     hour: (dateObject.getHours() % 12) || 12,
     minute: dateObject.getMinutes().toString().padStart(2, "0"),
+    seconds: dateObject.getSeconds().toString().padStart(2, "0"),
     amOrPM: dateObject.getHours() < 12 ? "AM" : "PM",
   };
  
-  return `${parts.date}/${parts.month}/${parts.year} ${parts.hour}:${parts.minute} ${parts.amOrPM}`;
+  return `${parts.date}/${parts.month}/${parts.year} ${parts.hour}:${parts.minute}:${parts.seconds} ${parts.amOrPM}`;
 }
-function displayHour(dateObject, timeBlockHour){
-var hours = dateObject.getHours();
-if(timeBlockHour === hours) {
-  return 'present'
+//function changes time block color depending on current time//
+function displayHour(parts){
+var timeBlockHour = $("#textarea")
+var hours = parts[3];
+  if(timeBlockHour === hours) {
+$("#textarea").addClass("past");
 }
-else if(timeBlockHour < hours){
-return 'past'}
-else {
-  return 'future'
+  else if(timeBlockHour < hours){
+$("#textarea").addClass("present");
+$("#textarea").removeClass("past");
+$("#textarea").removeClass("future");
 }
+  else {
+$("#textarea").addClass("future");
+$("#textarea").removeClass("past");
+$("#textarea").removeClass("present");
+};
 
-}
+};
 const myDate = new Date();
 const myDateFormatted = formatDate(myDate);
 console.log(myDateFormatted);
@@ -135,6 +143,3 @@ $(function () {
   
 });
 
-function displayTime(){
-  
-}
